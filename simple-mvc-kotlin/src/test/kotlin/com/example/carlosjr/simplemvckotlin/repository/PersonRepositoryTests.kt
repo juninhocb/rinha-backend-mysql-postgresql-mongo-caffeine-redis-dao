@@ -15,7 +15,7 @@ class PersonRepositoryTests(@Autowired val repository: PersonRepository) {
     fun shouldFindByCriteria() {
 
         val persisted = repository
-            .findByNameOrNicknameOrStackOrBornAt("john", "john", "john", "john")
+            .findByCriteria("john")
 
         assertThat(persisted).isNotNull
 

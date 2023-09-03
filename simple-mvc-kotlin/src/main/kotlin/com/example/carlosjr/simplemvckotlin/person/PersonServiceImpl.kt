@@ -3,7 +3,6 @@ package com.example.carlosjr.simplemvckotlin.person
 import com.example.carlosjr.simplemvckotlin.exception.PersonNotFoundException
 import org.springframework.stereotype.Service
 import java.util.*
-import java.util.stream.Collectors
 
 @Service
 class PersonServiceImpl(private val repository: PersonRepository,
@@ -20,9 +19,10 @@ class PersonServiceImpl(private val repository: PersonRepository,
     }
 
     override fun getByCriteria(criteria: String): Set<PersonDto> {
-        return repository.findByNameOrNicknameOrStackOrBornAt(
-                criteria, criteria, criteria, criteria
-            ).map { mapper.entityToDto(it) }.toSet()
+        return repository
+            .findByCriteria(criteria)
+            .map { mapper.entityToDto(it) }
+            .toSet()
     }
 
     override fun getCount(): String {

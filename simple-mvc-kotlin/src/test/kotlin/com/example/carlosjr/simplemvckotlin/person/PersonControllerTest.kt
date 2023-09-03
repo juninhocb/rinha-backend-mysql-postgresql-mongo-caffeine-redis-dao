@@ -137,6 +137,8 @@ class PersonControllerTest(@Autowired private val restTemplate: TestRestTemplate
         assertThat(postResponse.statusCode).isEqualTo(HttpStatus.CREATED)
 
         val responseType = object : ParameterizedTypeReference<Set<PersonDto>>() {}
+
+        //by exactly nickname
         val getResponse = restTemplate.exchange(
             "/pessoas?t=ana",
             HttpMethod.GET,
@@ -145,6 +147,38 @@ class PersonControllerTest(@Autowired private val restTemplate: TestRestTemplate
         )
 
         assertThat(getResponse.body!!.elementAt(0).nickname).isEqualTo("ana")
+
+        //by peace of name
+        val getResponse2 = restTemplate.exchange(
+            "/pessoas?t=Barbosa",
+            HttpMethod.GET,
+            null,
+            responseType
+        )
+
+        assertThat(getResponse2.body!!.elementAt(0).nickname).isEqualTo("ana")
+
+        //by peace of birth
+        val getResponse3 = restTemplate.exchange(
+            "/pessoas?t=1985",
+            HttpMethod.GET,
+            null,
+            responseType
+        )
+
+        assertThat(getResponse3.body!!.elementAt(0).nickname).isEqualTo("ana")
+
+        //by peace of stack
+        val getResponse4 = restTemplate.exchange(
+            "/pessoas?t=Node",
+            HttpMethod.GET,
+            null,
+            responseType
+        )
+
+        assertThat(getResponse4.body!!.size).isGreaterThan(1)
+
+        println(getResponse4.body)
 
     }
 
