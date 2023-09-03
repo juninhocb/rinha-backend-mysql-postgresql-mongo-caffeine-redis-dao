@@ -1,4 +1,4 @@
-create table person (
+create table if not exists `person` (
     id char(36),
     born_at VARCHAR(10),
     name VARCHAR(100),

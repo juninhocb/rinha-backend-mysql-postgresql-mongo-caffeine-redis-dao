@@ -1,0 +1,1 @@
+mvn io.fabric8:docker-maven-plugin:0.33.0:build

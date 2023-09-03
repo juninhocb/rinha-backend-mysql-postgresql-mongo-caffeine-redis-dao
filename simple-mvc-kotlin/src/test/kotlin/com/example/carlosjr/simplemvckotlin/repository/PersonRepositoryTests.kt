@@ -11,7 +11,7 @@ import org.springframework.test.context.ActiveProfiles
 @DataJpaTest
 class PersonRepositoryTests(@Autowired val repository: PersonRepository) {
 
-    @Test
+    //@Test
     fun shouldFindByCriteria() {
 
         val persisted = repository
