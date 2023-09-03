@@ -8,16 +8,16 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysqlserver:3306/db-rinhabackend?allowPublicKeyRetrieval=true
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
-    deploy:
-      resources:
-        limits:
-          cpus: '0.35'
-          memory: '0.7GB'
     networks:
       - app-network
     depends_on:
       mysqlserver:
         condition: service_healthy
+    deploy:
+      resources:
+        limits:
+          cpus: '0.35'
+          memory: '0.7GB'
 
   api-2:
     image: simple-mvc-kotlin
@@ -26,16 +26,16 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysqlserver:3306/db-rinhabackend?allowPublicKeyRetrieval=true
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
-    deploy:
-      resources:
-        limits:
-          cpus: '0.35'
-          memory: '0.7GB'
     networks:
       - app-network
     depends_on:
       mysqlserver:
         condition: service_healthy
+    deploy:
+      resources:
+        limits:
+          cpus: '0.35'
+          memory: '0.7GB'
 
   nginx:
     image: nginx:latest
@@ -71,6 +71,11 @@ services:
       interval: 5s
       timeout: 3s
       retries: 3
+    deploy:
+      resources:
+        limits:
+          cpus: '0.7'
+          memory: '1.5GB'
 
 networks:
   app-network:
