@@ -24,12 +24,12 @@ class GlobalExceptionHandler {
         val err = StandardError(
             msg = ex.message!!,
             path = request.requestURI,
-            code = HttpStatus.NOT_FOUND.value(),
+            code = HttpStatus.INTERNAL_SERVER_ERROR.value(),
         )
 
         errorList.add(err)
 
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err)
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(err)
     }
 
     @ExceptionHandler(PersonNotFoundException::class)
