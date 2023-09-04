@@ -6,7 +6,7 @@ create table if not exists `person` (
     born_at VARCHAR(10),
     name VARCHAR(100),
     nickname VARCHAR(32) unique,
-    stack VARCHAR(32),
+    stack VARCHAR(255),
     primary key (id)
 ) engine=InnoDB
 

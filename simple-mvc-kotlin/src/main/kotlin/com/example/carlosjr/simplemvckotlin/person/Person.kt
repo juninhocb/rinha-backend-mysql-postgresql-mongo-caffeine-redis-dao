@@ -19,7 +19,7 @@ data class Person(
     val name: String,
     @Column(name = "born_at", columnDefinition = "VARCHAR(10)")
     val bornAt: String,
-    @Column(columnDefinition = "VARCHAR(32)")
+    //@Column(columnDefinition = "VARCHAR(32)")
     val stack: String?
 ) {
     constructor() : this(null, "", "", "", null)

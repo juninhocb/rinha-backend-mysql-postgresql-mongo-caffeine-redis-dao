@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat
 import com.fasterxml.jackson.annotation.JsonProperty
 import jakarta.validation.constraints.*
 import java.time.LocalDate
-import java.util.UUID
+import java.util.*
 
 data class PersonDto(
     @Null
@@ -23,7 +23,7 @@ data class PersonDto(
     @JsonFormat(pattern = "yyyy-MM-dd")
     @NotNull(message = "Data não pode ser null")
     val bornAt: LocalDate,
-    @Size(max = 32)
+    //@Size(max = 32)
     @Pattern(regexp = "^[a-zA-Z]+$", message = "Stack deve ser um array apenas de Strings")
     val stack: Set<String>? = null
     ) {
