@@ -8,5 +8,7 @@ data class StandardError(
     val path: String,
     @JsonProperty("status_code")
     val code: Int,
-    val timestamp: LocalDateTime = LocalDateTime.now()
+    val timestamp: LocalDateTime = LocalDateTime.now(),
+    @JsonProperty("class")
+    val className: String? = ""
 )

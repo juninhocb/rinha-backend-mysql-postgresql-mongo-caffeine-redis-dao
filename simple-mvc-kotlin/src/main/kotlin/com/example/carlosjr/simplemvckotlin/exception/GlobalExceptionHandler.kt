@@ -2,9 +2,12 @@ package com.example.carlosjr.simplemvckotlin.exception
 
 //import org.h2.jdbc.JdbcSQLIntegrityConstraintViolationException
 import jakarta.servlet.http.HttpServletRequest
+import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.http.converter.HttpMessageNotReadableException
+import org.springframework.web.bind.MethodArgumentNotValidException
+import org.springframework.web.bind.MissingServletRequestParameterException
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
 import java.sql.SQLIntegrityConstraintViolationException
@@ -25,11 +28,55 @@ class GlobalExceptionHandler {
             msg = ex.message!!,
             path = request.requestURI,
             code = HttpStatus.INTERNAL_SERVER_ERROR.value(),
+            className = ex.javaClass.name
         )
 
         errorList.add(err)
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(err)
+    }
+
+
+    @ExceptionHandler(DataIntegrityViolationException::class)
+    fun handleDataIntegrityViolation(ex: DataIntegrityViolationException,
+                                     request: HttpServletRequest)
+            : ResponseEntity<StandardError> {
+
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(
+            StandardError(
+                msg = ex.message!!,
+                path = request.requestURI,
+                code = HttpStatus.UNPROCESSABLE_ENTITY.value(),
+            )
+        )
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException::class)
+    fun handleMethodArgumentNotValid(ex: MethodArgumentNotValidException,
+                                         request: HttpServletRequest)
+            : ResponseEntity<StandardError> {
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+            StandardError(
+                msg = ex.message,
+                path = request.requestURI,
+                code = HttpStatus.BAD_REQUEST.value(),
+            )
+        )
+    }
+
+    @ExceptionHandler(MissingServletRequestParameterException::class)
+    fun handleMissingServletRequestParam(ex: MissingServletRequestParameterException,
+                             request: HttpServletRequest)
+            : ResponseEntity<StandardError> {
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+            StandardError(
+                msg = ex.message,
+                path = request.requestURI,
+                code = HttpStatus.BAD_REQUEST.value(),
+            )
+        )
     }
 
     @ExceptionHandler(PersonNotFoundException::class)
