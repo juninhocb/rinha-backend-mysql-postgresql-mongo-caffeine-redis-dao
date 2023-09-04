@@ -1,16 +1,12 @@
 package com.example.carlosjr.simplemvckotlin.person
 
+import com.example.carlosjr.simplemvckotlin.exception.GlobalExceptionHandler
+import com.example.carlosjr.simplemvckotlin.exception.StandardError
 import jakarta.validation.Valid
-import org.springframework.data.jpa.domain.AbstractPersistable_.id
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import org.springframework.web.util.UriComponentsBuilder
-import java.util.UUID
+import java.util.*
 
 @RestController
 class PersonController(private val service: PersonService) {
@@ -45,6 +41,11 @@ class PersonController(private val service: PersonService) {
     @GetMapping("/contagem-pessoas")
     fun getCount() : ResponseEntity<String> {
         return ResponseEntity.ok().body(service.getCount())
+    }
+
+    @GetMapping("/erros")
+    fun getErr() : ResponseEntity<List<StandardError>>{
+        return ResponseEntity.ok().body(GlobalExceptionHandler.errorList)
     }
 
 }
