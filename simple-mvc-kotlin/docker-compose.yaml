@@ -5,13 +5,11 @@ services:
     image: simple-mvc-kotlin
     hostname: api-1
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysqlserver:3306/db-rinhabackend?allowPublicKeyRetrieval=true
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: root
+      SPRING_DATA_MONGODB_URI: mongodb://mongodbserver:27017/rinhabackend
     networks:
       - app-network
     depends_on:
-      mysqlserver:
+      mongodbserver:
         condition: service_healthy
     deploy:
       resources:
@@ -23,13 +21,11 @@ services:
     image: simple-mvc-kotlin
     hostname: api-1
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysqlserver:3306/db-rinhabackend?allowPublicKeyRetrieval=true
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: root
+      SPRING_DATA_MONGODB_URI: mongodb://mongodbserver:27017/rinhabackend
     networks:
       - app-network
     depends_on:
-      mysqlserver:
+      mongodbserver:
         condition: service_healthy
     deploy:
       resources:
@@ -54,24 +50,19 @@ services:
           cpus: '0.1'
           memory: '0.1GB'
 
-  mysqlserver:
-    image: mysql:8.0.33
-    command: --default-authentication-plugin=mysql_native_password
+  mongodbserver:
+    image: mongo:latest
     ports:
-      - '3306:3306'
-    environment:
-      MYSQL_ROOT_PASSWORD: root
+      - '27017:27017'
     volumes:
-      - ./mysqld.cnf:/etc/mysql/conf.d/mysqld.cnf
-      - ./src/main/resources/scripts/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+      - ./src/main/resources/scripts/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
     networks:
       app-network:
     healthcheck:
-      test: [ "CMD-SHELL", "mysqladmin ping -h localhost -uroot -proot" ]
-      interval: 5s
-      timeout: 5s
-      retries: 20
-      start_period: 10s
+      test: ["CMD", "mongo", "--eval", "db.runCommand({ ping: 1 })"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
     deploy:
       resources:
         limits:

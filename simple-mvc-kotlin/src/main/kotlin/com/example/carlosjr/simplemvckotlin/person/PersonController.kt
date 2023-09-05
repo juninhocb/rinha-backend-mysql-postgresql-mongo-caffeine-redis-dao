@@ -1,6 +1,7 @@
 package com.example.carlosjr.simplemvckotlin.person
 
 import jakarta.validation.Valid
+import org.bson.types.ObjectId
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.util.UriComponentsBuilder
@@ -25,7 +26,7 @@ class PersonController(private val service: PersonService) {
     }
 
     @GetMapping("/pessoas/{personId}")
-    fun getById(@PathVariable(name = "personId") id: UUID)
+    fun getById(@PathVariable(name = "personId") id: ObjectId)
                                         : ResponseEntity<PersonDto>{
         return ResponseEntity.ok().body(service.getById(id))
     }

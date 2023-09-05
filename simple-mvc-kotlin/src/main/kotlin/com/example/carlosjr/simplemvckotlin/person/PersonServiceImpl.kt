@@ -1,6 +1,7 @@
 package com.example.carlosjr.simplemvckotlin.person
 
 import com.example.carlosjr.simplemvckotlin.exception.PersonNotFoundException
+import org.bson.types.ObjectId
 import org.springframework.stereotype.Service
 import java.util.*
 
@@ -8,13 +9,13 @@ import java.util.*
 class PersonServiceImpl(private val repository: PersonRepository,
                         private val mapper: PersonMapper) : PersonService {
 
-    override fun create(personDto: PersonDto): UUID {
+    override fun create(personDto: PersonDto): ObjectId {
         return repository.save(
                 mapper.dtoToEntity(personDto)
-            ).id!!
+            )._id!!
     }
 
-    override fun getById(id: UUID): PersonDto {
+    override fun getById(id: ObjectId): PersonDto {
         return handleOpt(repository.findById(id))!!
     }
 
