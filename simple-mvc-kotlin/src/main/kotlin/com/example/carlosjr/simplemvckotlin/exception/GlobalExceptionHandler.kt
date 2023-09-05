@@ -15,10 +15,7 @@ import java.sql.SQLIntegrityConstraintViolationException
 @ControllerAdvice
 class GlobalExceptionHandler {
 
-    companion object{
-        var errorList : MutableList<StandardError> = mutableListOf()
-    }
-
+    /*
     @ExceptionHandler(Exception::class)
     fun genericExceptionHandler(ex: Exception,
                              request: HttpServletRequest)
@@ -27,14 +24,11 @@ class GlobalExceptionHandler {
         val err = StandardError(
             msg = ex.message!!,
             path = request.requestURI,
-            code = HttpStatus.INTERNAL_SERVER_ERROR.value(),
-            className = ex.javaClass.name
+            code = HttpStatus.INTERNAL_SERVER_ERROR.value()
         )
 
-        errorList.add(err)
-
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(err)
-    }
+    }*/
 
 
     @ExceptionHandler(DataIntegrityViolationException::class)
