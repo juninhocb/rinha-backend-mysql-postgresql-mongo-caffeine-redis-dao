@@ -4,7 +4,7 @@ import org.springframework.boot.CommandLineRunner
 import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Component
 
-@Profile("test")
+@Profile("test", "dev")
 @Component
 class Bootstrap(private val repository: PersonRepository)
     : CommandLineRunner{

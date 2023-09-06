@@ -12,12 +12,12 @@ data class PersonDto(
     @field:Size(max = 32)
     @JsonProperty("apelido")
     @field:NotBlank(message = "Não pode ser null (ou vazio)")
-    @field:Pattern(regexp = "^[a-zA-Z ]+$", message = "Nome deve ser string e não número")
+    @field:Pattern(regexp = "^[a-zA-ZÀ-ÿ ]+\$", message = "Apelido deve ser string e não número")
     val nickname: String,
     @field:Size(max = 100)
     @JsonProperty("nome")
     @field:NotBlank(message = "Não pode ser null (ou vazio)")
-    @field:Pattern(regexp = "^[a-zA-Z ]+$", message = "Nome deve ser string e não número")
+    @field:Pattern(regexp = "^[a-zA-ZÀ-ÿ ]+$", message = "Nome deve ser string e não número")
     val name: String,
     @JsonProperty("nascimento")
     @JsonFormat(pattern = "yyyy-MM-dd")

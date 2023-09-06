@@ -1,10 +1,10 @@
 package com.example.carlosjr.simplemvckotlin.person
 
-import java.util.UUID
+import java.util.*
 
 interface PersonService {
 
-    fun create(personDto: PersonDto) : UUID
+    fun create(personDto: PersonDto) : PersonDto
     fun getById(id: UUID) : PersonDto
     fun getByCriteria(criteria: String) : Set<PersonDto>
     fun getCount() : String

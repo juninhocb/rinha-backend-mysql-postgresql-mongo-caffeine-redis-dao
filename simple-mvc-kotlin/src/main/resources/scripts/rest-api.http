@@ -40,3 +40,6 @@ Content-Type: application/json
 }
 
 ###
+
+GET http://localhost:8080/pessoas/5444cc45-ff49-40df-bd89-6134d246c835
+Accept: application/json

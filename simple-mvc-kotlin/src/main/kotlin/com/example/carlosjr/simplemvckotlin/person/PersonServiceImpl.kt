@@ -8,13 +8,16 @@ import java.util.*
 class PersonServiceImpl(private val repository: PersonRepository,
                         private val mapper: PersonMapper) : PersonService {
 
-    override fun create(personDto: PersonDto): UUID {
-        return repository.save(
-                mapper.dtoToEntity(personDto)
-            ).id!!
+    override fun create(personDto: PersonDto): PersonDto {
+
+        val personSaved = repository.save(
+                mapper.dtoToEntity(personDto))
+
+        return mapper.entityToDto(personSaved)
     }
 
     override fun getById(id: UUID): PersonDto {
+        println("Arrive here....")
         return handleOpt(repository.findById(id))!!
     }
 

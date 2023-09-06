@@ -1,42 +1,42 @@
 version: '3.9'
 
-services:
+services:             
+  
   api-1:
     image: simple-mvc-kotlin
     hostname: api-1
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysqlserver:3306/db-rinhabackend?allowPublicKeyRetrieval=true
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: root
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-db:5432/postgres
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
     networks:
       - app-network
     depends_on:
-      mysqlserver:
+      postgres-db:
         condition: service_healthy
     deploy:
       resources:
         limits:
           cpus: '0.35'
           memory: '0.7GB'
-
   api-2:
     image: simple-mvc-kotlin
-    hostname: api-1
+    hostname: api-2
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysqlserver:3306/db-rinhabackend?allowPublicKeyRetrieval=true
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: root
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-db:5432/postgres
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
     networks:
       - app-network
     depends_on:
-      mysqlserver:
+      postgres-db:
         condition: service_healthy
     deploy:
       resources:
         limits:
           cpus: '0.35'
           memory: '0.7GB'
-
+          
   nginx:
     image: nginx:latest
     volumes:
@@ -52,31 +52,32 @@ services:
       resources:
         limits:
           cpus: '0.1'
-          memory: '0.1GB'
-
-  mysqlserver:
-    image: mysql:8.0.33
-    command: --default-authentication-plugin=mysql_native_password
-    ports:
-      - '3306:3306'
+          memory: '0.1GB' 
+  
+  
+  postgres-db:
+    image: postgres:latest
+    command: 'postgres -c max_connections=600' #      -c shared_buffers=256MB -c synchronous_commit=off -c fsync=off -c full_page_writes=off
+    container_name: postgre
+    user: postgres
     environment:
-      MYSQL_ROOT_PASSWORD: root
-    volumes:
-      - ./mysqld.cnf:/etc/mysql/conf.d/mysqld.cnf
-      - ./src/main/resources/scripts/schema.sql:/docker-entrypoint-initdb.d/schema.sql
-    networks:
-      app-network:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=postgres
     healthcheck:
-      test: [ "CMD-SHELL", "mysqladmin ping -h localhost -uroot -proot" ]
-      interval: 5s
+      test: [ "CMD-SHELL", "pg_isready" ]
+      interval: 3s
       timeout: 5s
-      retries: 20
-      start_period: 10s
+      retries: 10
     deploy:
       resources:
         limits:
           cpus: '0.7'
           memory: '1.5GB'
+    volumes: 
+      - ./src/main/resources/scripts/schema2.sql:/docker-entrypoint-initdb.d/schema2.sql
+    networks:
+      - app-network        
 
 networks:
   app-network:
