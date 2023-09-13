@@ -9,9 +9,9 @@ class PersonMapper {
     fun dtoToEntity(dto: PersonDto) : Person{
         return Person(
             id = null,
-            nickname = dto.nickname,
-            name = dto.name,
-            bornAt = dto.bornAt.toString(),
+            nickname = dto.apelido,
+            name = dto.nome,
+            bornAt = dto.nascimento,
             stack = dto.stack.toString()
         )
     }
@@ -27,9 +27,9 @@ class PersonMapper {
 
         return PersonDto(
             id = entity.id!!,
-            nickname = entity.nickname,
-            name = entity.name,
-            bornAt = LocalDate.parse(entity.bornAt),
+            apelido = entity.nickname,
+            nome = entity.name,
+            nascimento = entity.bornAt,
             stack = stringedSet
         )
     }

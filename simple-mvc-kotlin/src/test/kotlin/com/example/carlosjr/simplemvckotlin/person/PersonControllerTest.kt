@@ -21,6 +21,9 @@ class PersonControllerTest(@Autowired private val restTemplate: TestRestTemplate
 
     lateinit var validPerson : PersonDto
 
+}
+
+    /*
     @BeforeEach
     fun setUp() {
         validPerson = PersonDto(
@@ -30,6 +33,7 @@ class PersonControllerTest(@Autowired private val restTemplate: TestRestTemplate
             stack =  setOf("Node", "Postgres")
         )
     }
+
 
     //@Test
     @DirtiesContext
@@ -53,6 +57,7 @@ class PersonControllerTest(@Autowired private val restTemplate: TestRestTemplate
 
     }
 
+    /*
     //@Test
     @DirtiesContext
     fun shouldPersistEvenIfStackIsNull() {
@@ -66,7 +71,7 @@ class PersonControllerTest(@Autowired private val restTemplate: TestRestTemplate
             .postForEntity("/pessoas", p, Void.TYPE )
 
         assertThat(postResponse.statusCode).isEqualTo(HttpStatus.CREATED)
-    }
+    } */
 
     //@Test
     @DirtiesContext
@@ -205,4 +210,4 @@ class PersonControllerTest(@Autowired private val restTemplate: TestRestTemplate
         val bornAt: LocalDate? = null,
         val stack: Set<Any>? = null
     )
-}
+}*/

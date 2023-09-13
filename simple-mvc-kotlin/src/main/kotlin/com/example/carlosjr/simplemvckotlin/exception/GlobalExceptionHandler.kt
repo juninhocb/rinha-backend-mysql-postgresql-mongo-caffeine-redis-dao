@@ -45,6 +45,20 @@ class GlobalExceptionHandler {
         )
     }
 
+    @ExceptionHandler(RepeatedPersonException::class)
+    fun handleRepeatedPerson(ex: RepeatedPersonException,
+                                     request: HttpServletRequest)
+            : ResponseEntity<StandardError> {
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+            StandardError(
+                msg = ex.message!!,
+                path = request.requestURI,
+                code = HttpStatus.BAD_REQUEST.value(),
+            )
+        )
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException::class)
     fun handleMethodArgumentNotValid(ex: MethodArgumentNotValidException,
                                          request: HttpServletRequest)
