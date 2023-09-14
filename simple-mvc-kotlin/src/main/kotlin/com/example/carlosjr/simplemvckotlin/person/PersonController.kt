@@ -43,15 +43,11 @@ class PersonController(private val service: PersonService,
     fun getById(@PathVariable(name = "personId") id: UUID)
                                         : ResponseEntity<PersonDto>{
 
-        println("test")
         val cachedValue = redisTemplate.opsForValue().get(id.toString())
 
-        println("Old1!")
         if (cachedValue != null) {
             return ResponseEntity.ok().body(cachedValue)
         }
-
-        println("Old2!")
 
         return ResponseEntity.ok().body(service.getById(id))
     }

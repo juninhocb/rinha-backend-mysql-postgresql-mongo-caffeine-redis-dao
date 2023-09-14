@@ -8,10 +8,10 @@ import java.util.*
 class PersonServiceImpl(private val repository: PersonRepository,
                         private val mapper: PersonMapper) : PersonService {
 
-    override fun create(personDto: PersonDto): UUID {
-        return repository.save(
-                mapper.dtoToEntity(personDto)
-            ).id!!
+    override fun create(personDto: PersonDto): String {
+
+        return repository
+                .save(mapper.dtoToEntity(personDto))
     }
 
     override fun getById(id: UUID): PersonDto {

@@ -9,7 +9,7 @@ import java.util.*
 data class PersonDto (
     @JsonProperty("id")
     @Null
-    var id: UUID? = null,
+    var id: String? = null,
     @field:Size(max = 32)
     @JsonProperty("apelido")
     @field:NotBlank(message = "Não pode ser null (ou vazio)")

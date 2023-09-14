@@ -12,6 +12,7 @@ class Bootstrap(private val repository: PersonRepository)
     override fun run(vararg args: String?) {
 
         val p1 = Person(
+            id = "",
             nickname = "john",
             name = "John Green",
             bornAt = "2000-10-01",
@@ -19,6 +20,7 @@ class Bootstrap(private val repository: PersonRepository)
         )
 
         val p2 = Person(
+            id = "",
             nickname = "peter",
             name = "Peter Red",
             bornAt = "2002-10-01",
@@ -26,13 +28,16 @@ class Bootstrap(private val repository: PersonRepository)
         )
 
         val p3 = Person(
+            id = "",
             nickname = "robert",
             name = "Robert Orange",
             bornAt = "2003-10-01",
             stack = null
         )
 
-        repository.saveAll(listOf(p1,p2,p3))
+        repository.save(p1)
+        repository.save(p2)
+        repository.save(p3)
     }
 
 
